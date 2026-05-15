@@ -1,20 +1,24 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
   title: Customer Service API
-  version: v1
+  version: 1.0.0
+  description: API для управління клієнтами
+
 paths:
   /customers/{id}:
     get:
-      summary: Get customer by ID
+      summary: Отримати інформацію про клієнта
+      description: Повертає дані клієнта за його ідентифікатором
       parameters:
         - name: id
           in: path
           required: true
+          description: Унікальний ідентифікатор клієнта
           schema:
             type: string
       responses:
         '200':
-          description: Customer found
+          description: Успішна відповідь з даними клієнта
           content:
             application/json:
               schema:
@@ -22,18 +26,39 @@ paths:
                 properties:
                   id:
                     type: string
+                    example: "c123"
                   firstName:
                     type: string
+                    example: "Oleksandr"
                   lastName:
                     type: string
-                  address:
-                    type: object
-                    properties:
-                      street:
-                        type: string
-                      city:
-                        type: string
-                      zipCode:
-                        type: string
+                    example: "Isaiev"
+                  email:
+                    type: string
+                    format: email
+                    example: "oleksandr@example.com"
+                  phone:
+                    type: string
+                    example: "+380XXXXXXXXX"
+                  addresses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: "delivery"
+                        street:
+                          type: string
+                          example: "Shevchenko St."
+                        city:
+                          type: string
+                          example: "Kyiv"
+                        postalCode:
+                          type: string
+                          example: "01001"
+                        country:
+                          type: string
+                          example: "Ukraine"
         '404':
-          description: Customer not found
+          description: Клієнта не знайдено
